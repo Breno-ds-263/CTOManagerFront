@@ -1,0 +1,33 @@
+<h2>Cadastro de CTOs</h2>
+
+<div>
+  <input [(ngModel)]="novoCTO.nome" placeholder="Nome da CTO">
+  <input type="number" [(ngModel)]="novoCTO.latitude" placeholder="Latitude">
+  <input type="number" [(ngModel)]="novoCTO.longitude" placeholder="Longitude">
+
+  <select [(ngModel)]="novoCTO.modelo.id">
+    <option [value]="0" disabled>Selecione o modelo</option>
+    <option *ngFor="let m of modelos" [value]="m.id">{{ m.nome }} - {{ m.fabricante }}</option>
+  </select>
+
+  <button (click)="salvar()">Cadastrar CTO</button>
+</div>
+
+<hr>
+
+<!-- Mensagem de erro -->
+<div *ngIf="mensagemErro" style="color:red; margin-bottom:10px;">
+  {{ mensagemErro }}
+</div>
+
+<h3>Lista de CTOs</h3>
+
+<ul>
+  <li *ngFor="let c of ctos">
+    {{ c.nome }} | Lat: {{ c.latitude }} | Lon: {{ c.longitude }} | Modelo: {{ c.modelo.nome }}
+    <button (click)="excluir(c.id!)">Excluir</button>
+    <span *ngIf="c.sensor?.status === 'ALARMADO'" style="color:orange; font-weight:bold;">
+      ALARMADO
+    </span>
+  </li>
+</ul>
